@@ -37,7 +37,7 @@ SECONDS=0
 # ================================================================================
 seed=42                    # Random seed for reproducibility
 dataset=mmlu               # Dataset to use (MMLU)
-exp_dir="experiments_mmlu"  # Experiment directory
+exp_dir="results/experiments_mmlu"  # Experiment directory
 mkdir -p "${exp_dir}"
 echo -e "${YELLOW}Experiment directory: ${exp_dir}${RESET}"
 
