@@ -37,12 +37,12 @@ SECONDS=0
 # ================================================================================
 seed=42                    # Random seed for reproducibility
 dataset=mmlu               # Dataset to use (MMLU)
-exp_dir="experiments_mmlu"  # Experiment directory
+exp_dir="experiments_mmlu_1"  # Experiment directory
 mkdir -p "${exp_dir}"
 echo -e "${YELLOW}Experiment directory: ${exp_dir}${RESET}"
 
 # Accelerate launch command with GPU configuration
-PY="time accelerate launch --config_file acc_config_0.yaml --main_process_port 0"
+PY="time accelerate launch --config_file acc_config.yaml --main_process_port 0"
 
 # ================================================================================
 # HYPERPARAMETER GRID GENERATION
@@ -115,7 +115,7 @@ cmd="$PY \
     seed=${seed} \
     data_split=${dataset}_holdout \
     max_samples=2880 \
-    batch_size=384 \
+    batch_size=512x \
     max_length=1024 \
     max_prompt_length=256 \
     trace_name=${trace_name} proxy_student=${proxy_student}"
@@ -209,7 +209,7 @@ for taulameps in "${taulamepss[@]}"; do
         seed=${seed} \
         data_split=${dataset}_test \
         max_samples=2880 \
-        batch_size=256 \
+        batch_size=400 \
         trace_name=${eval_traces} max_length=1024 max_prompt_length=256"
     run_stage "$stage" "$eval_sentinel" "$cmd"
 
@@ -238,7 +238,7 @@ for taulameps in "${taulamepss[@]}"; do
         tau=${tau} \
         lam=${lam} \
         eps=${eps} \
-        trace_name=${eval_traces} batch_size=160 max_length=1024 max_prompt_length=256"
+        trace_name=${eval_traces} batch_size=200 max_length=1024 max_prompt_length=256"
     run_stage "$stage" "$eval_sentinel" "$cmd"
 done
 

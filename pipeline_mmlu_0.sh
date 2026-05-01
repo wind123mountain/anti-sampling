@@ -59,7 +59,7 @@ declare -a taulamepss
 # Read hyperparameter combinations into array
 while IFS= read -r line; do
     taulamepss+=("$line")
-done < params_temp_baseline.txt
+done < params_full4.txt
 
 echo -e "$(hostname)" 
 echo -e "TAU      LAM      EPS" 
@@ -115,9 +115,9 @@ cmd="$PY \
     seed=${seed} \
     data_split=${dataset}_holdout \
     max_samples=2880 \
-    batch_size=32 \
+    batch_size=400 \
     max_length=1024 \
-    max_prompt_length=512 \
+    max_prompt_length=256 \
     trace_name=${trace_name} proxy_student=${proxy_student}"
 run_stage "$stage" "$holdout_sentinel" "$cmd"
 
@@ -160,7 +160,7 @@ for taulameps in "${taulamepss[@]}"; do
         data_split=${dataset}_train \
         grad_path=${grad_path} \
         max_samples=2880 \
-        batch_size=256 \
+        batch_size=200 \
         max_length=1024 \
         max_prompt_length=256 \
         tau=${tau} \
@@ -209,7 +209,7 @@ for taulameps in "${taulamepss[@]}"; do
         seed=${seed} \
         data_split=${dataset}_test \
         max_samples=2880 \
-        batch_size=384 \
+        batch_size=400 \
         trace_name=${eval_traces} max_length=1024 max_prompt_length=256"
     run_stage "$stage" "$eval_sentinel" "$cmd"
 
@@ -238,7 +238,7 @@ for taulameps in "${taulamepss[@]}"; do
         tau=${tau} \
         lam=${lam} \
         eps=${eps} \
-        trace_name=${eval_traces} batch_size=256 max_length=1024 max_prompt_length=256"
+        trace_name=${eval_traces} batch_size=200 max_length=1024 max_prompt_length=256"
     run_stage "$stage" "$eval_sentinel" "$cmd"
 done
 
