@@ -37,7 +37,7 @@ SECONDS=0
 # ================================================================================
 seed=42                    # Random seed for reproducibility
 dataset=mmlu               # Dataset to use (MMLU)
-exp_dir="experiments_mmlu_1"  # Experiment directory
+exp_dir="results/experiments_mmlu_1"  # Experiment directory
 mkdir -p "${exp_dir}"
 echo -e "${YELLOW}Experiment directory: ${exp_dir}${RESET}"
 
@@ -115,7 +115,7 @@ cmd="$PY \
     seed=${seed} \
     data_split=${dataset}_holdout \
     max_samples=2880 \
-    batch_size=512x \
+    batch_size=512 \
     max_length=1024 \
     max_prompt_length=256 \
     trace_name=${trace_name} proxy_student=${proxy_student}"
